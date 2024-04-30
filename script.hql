@@ -14,6 +14,29 @@ CREATE TABLE table_itsymbaliuk (
     cardio INT
 )
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ','
+FIELDS TERMINATED BY '\;'
 STORED AS TEXTFILE;
-LOAD DATA INPATH 'bootcamp5.csv' INTO TABLE table_itsymbaliuk;
+LOAD DATA LOCAL INPATH 'bootcamp5.csv' INTO TABLE table_itsymbaliuk;
+
+-- task 1
+SELECT
+    CASE
+        WHEN gender = 1 THEN 'Male'
+        WHEN gender = 2 THEN 'Female'
+        ELSE 'Unknown'
+    END AS gender,
+    AVG(height) AS average_height
+FROM
+    table_itsymbaliuk
+GROUP BY
+    gender;
+
+-- task 2
+
+-- v1
+CREATE VIEW total_rows AS
+SELECT weight < 65 as condition FROM table_itsymbaliuk WHERE gender = 2 AND age > 60;
+SELECT COUNT(CASE WHEN condition = TRUE THEN 1 ELSE NULL END)/COUNT(*)*100 FROM total_rows;
+
+-- v2
+SELECT COUNT(CASE WHEN age > 60 AND gender = 2 AND weight < 65 THEN 1 ELSE NULL END)/COUNT(CASE WHEN age > 60 AND gender = 2 THEN 1 ELSE NULL END)*100 FROM table_itsymbaliuk;
