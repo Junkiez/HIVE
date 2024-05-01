@@ -40,3 +40,6 @@ SELECT COUNT(CASE WHEN condition = TRUE THEN 1 ELSE NULL END)/COUNT(*)*100 FROM 
 
 -- v2
 SELECT COUNT(CASE WHEN age > 60 AND gender = 2 AND weight < 65 THEN 1 ELSE NULL END)/COUNT(CASE WHEN age > 60 AND gender = 2 THEN 1 ELSE NULL END)*100 FROM table_itsymbaliuk;
+
+-- v3
+SELECT 100 * AVG(CASE WHEN weight < 65 THEN 1 ELSE 0 END) FROM table_itsymbaliuk WHERE age > 60 AND gender = 2;
